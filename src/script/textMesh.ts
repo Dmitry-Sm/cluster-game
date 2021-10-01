@@ -13,15 +13,17 @@ import fontJson from '../assets/fonts/RightBankFLF.json'
 
 
 export class TextMesh {
-    static image = new Image();
 
-    constructor(engine) {
+    mesh;
+
+    constructor(engine, text) {
         const texture = new Texture(engine.gl, {
             generateMipmaps: false,
         });
 
-        TextMesh.image.onload = () => (texture.image = TextMesh.image);
-        TextMesh.image.src = fontImage;
+        const image = new Image();
+        image.onload = () => (texture.image = image);
+        image.src = fontImage;
 
         const program = new Program(engine.gl, {
             vertex: vert,
@@ -36,9 +38,9 @@ export class TextMesh {
             depthWrite: false,
         });
 
-        const text = new Text({
+        const textObject = new Text({
             font: fontJson,
-            text: "0 1 2 3 4",
+            text,
             width: 4,
             align: 'center',
             letterSpacing: -0.05,
@@ -50,29 +52,27 @@ export class TextMesh {
         const geometry = new Geometry(engine.gl, {
             position: {
                 size: 3,
-                data: text.buffers.position
+                data: textObject.buffers.position
             },
             uv: {
                 size: 2,
-                data: text.buffers.uv
+                data: textObject.buffers.uv
             },
             // id provides a per-character index, for effects that may require it
             id: {
                 size: 1,
-                data: text.buffers.id
+                data: textObject.buffers.id
             },
             index: {
-                data: text.buffers.index
+                data: textObject.buffers.index
             },
         });
 
-        const mesh = new Mesh(engine.gl, {
+        this.mesh = new Mesh(engine.gl, {
             geometry,
             program
         });
 
-        // Use the height value to position text vertically. Here it is centered.
-        mesh.position.y = text.height * 0.5;
-        mesh.setParent(engine.scene);
+        this.mesh.scale.set(0.8, 0.8, 1);
     }
 }

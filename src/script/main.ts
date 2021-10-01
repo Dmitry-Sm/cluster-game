@@ -1,5 +1,6 @@
 import { Engine } from './engine';
+import { Game } from './game';
 import { TextMesh } from './textMesh';
 
 const engine = new Engine();
-const fontMesh = new TextMesh(engine);
+const game = new Game(engine);

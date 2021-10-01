@@ -24,7 +24,8 @@ export class Engine {
         this.scene = new Transform();
 
         this.camera = new Camera(this.gl, {
-            fov: 20
+            fov: 12,
+            far: 1000
         });
         this.camera.position.set(0, 0, 100);
 
