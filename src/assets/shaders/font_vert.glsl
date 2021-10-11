@@ -7,6 +7,7 @@ attribute vec3 position;
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
 varying vec2 vUv;
+
 void main() {
     vUv = uv;
     

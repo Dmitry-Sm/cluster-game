@@ -3,7 +3,10 @@ import {
     Texture,
     Program,
     Mesh,
-    Text
+    Transform,
+    Text,
+    Vec4,
+    Vec3
 } from 'ogl-typescript';
 
 import frag from '../assets/shaders/font_frag.glsl'
@@ -11,12 +14,23 @@ import vert from '../assets/shaders/font_vert.glsl'
 import fontImage from '../assets/fonts/RightBankFLF.png'
 import fontJson from '../assets/fonts/RightBankFLF.json'
 
+const params = {
+    colors: {
+        default: new Vec4(0.29, 0.28, 0.295, 1.),
+        hovered: new Vec4(0.36, 0.21, 0.22, 0.9),
+        unactive: new Vec4(0.6, 0.6, 0.6, 0.1)
+    },
+    scale: new Vec3(0.35, 0.35, 1)
+}
+
 
 export class TextMesh {
-
-    mesh;
+    group: Transform;
+    mesh: Mesh;
 
     constructor(engine, text) {
+        this.group = new Transform();
+
         const texture = new Texture(engine.gl, {
             generateMipmaps: false,
         });
@@ -32,10 +46,11 @@ export class TextMesh {
                 tMap: {
                     value: texture
                 },
+                uColor: {
+                    value: params.colors.default
+                }
             },
-            transparent: true,
-            cullFace: null,
-            depthWrite: false,
+            transparent: true
         });
 
         const textObject = new Text({
@@ -73,6 +88,19 @@ export class TextMesh {
             program
         });
 
-        this.mesh.scale.set(0.8, 0.8, 1);
+        this.group.addChild(this.mesh);
+        this.mesh.scale.set(params.scale);
+    }
+
+    hover(isHoever: boolean) {
+        this.mesh.program.uniforms.uColor.value = isHoever ?
+            params.colors.hovered :
+            params.colors.default;
+    }
+
+    setActive(isActive: boolean) {
+        this.mesh.program.uniforms.uColor.value = isActive ?
+            params.colors.default :
+            params.colors.unactive;
     }
 }
