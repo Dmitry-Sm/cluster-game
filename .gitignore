@@ -16,3 +16,4 @@ prod/
 dev-server/
 archive/
 .cache/
+.parcel-cache

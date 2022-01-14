@@ -4,10 +4,6 @@
 
 # Cluster game
 
-Install [Parcel](https://parceljs.org/)
-```sh
-npm install -g parcel-bundler
-```
 
 Dependencies setup
 ```sh
