@@ -4,6 +4,10 @@
 
 # Cluster game
 
+## [Play](https://cluster-game.vercel.app/)
+
+<br>
+
 Dependencies setup
 ```sh
 npm install
