@@ -15,5 +15,5 @@ npm install
 
 Start app
 ```sh
-parcel index.html
+npx parcel index.html
 ```
